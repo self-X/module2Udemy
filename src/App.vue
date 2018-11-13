@@ -35,7 +35,7 @@
             return {
                 quoteStart: 'Just a quote to start with something !',
                 quotes: [],
-                selectedQuote: 8979787897
+                selectedQuote: null
             }
         },
 
