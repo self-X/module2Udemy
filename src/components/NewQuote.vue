@@ -2,18 +2,35 @@
     <div class="new-quote">
         <div class="form-block">
             <p class="quote-paragraph">Quote</p>
-            <form>
-                <textarea class="quotesarea"></textarea>
+                <textarea class="quotesarea" v-model="newQuote"></textarea>
                 <br>
-                <button class="btn btn-sm btn-primary add-quote">Add Quote</button>
-            </form>
+                <button @click="addQuote" class="btn btn-sm btn-primary add-quote">Add Quote</button>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        
+        data() {
+            return {
+                newQuote: '',
+            }
+        },
+
+        props: {
+            quotes: {
+                type: Array 
+            }
+        },
+
+        methods: {
+            addQuote() {
+                const sendQuote = new Promise((resolve, reject) => {
+                    this.$emit('onNewQuote', this.newQuote)
+                });
+                sendQuote.then(this.newQuote ='');
+            }
+        }
     }
 </script>
 

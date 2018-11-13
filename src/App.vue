@@ -1,8 +1,9 @@
 <template>
     <div class="container">
-        <app-progress-bar></app-progress-bar>
+        <app-progress-bar :progress="progress"
+        :total="total"></app-progress-bar>
         <br>
-        <app-new-quote></app-new-quote>
+        <app-new-quote :quotes="quotes" @onNewQuote="addedQuoteProgress"></app-new-quote>
         <app-quotes> 
             <div>
                 <div slot="first-quote" id="first-quote" class="container">
@@ -11,13 +12,9 @@
             </div>
             <div> 
                 <div class="container other-quotes"   
-                    v-for = "slot in 9" 
-                    :key = "slot"
-                    :class = "{alert: activeQuote,  'alert-danger': activeQuote}"
-                    :style = "{cursor: 'pointer'}"
-                    @mouseover="onMouseOver"
-                    @mouseleave="onMouseLeave">
-                    {{ quoteStart }}          
+                    v-for = "quote in quotes" 
+                    :key = "slot">
+                    {{ quote }}          
                 </div>  
             </div>
         </app-quotes>
@@ -34,22 +31,41 @@
         data() {
             return {
                 quoteStart: 'Just a quote to start with something !',
-                activeQuote: false,
+                quotes: [],
             }
         },
+
+        computed: {
+            progress(){                        
+                return `${this.quotes.length * 10}%`; 
+            },
+
+            total(){
+                return (this.quotes && this.quotes.length <= 10 && this.quotes.length) ||  
+                (this.quotes.length >= 1 && this.quotes.length) || 0;
+            }
+        },
+
         components: {
             appProgressBar: ProgressBar,
             appNewQuote: NewQuote,
             appQuotes: Quotes,
             appInfo: Info,
         },
+        
+        watch: {
+            total() {
+                if (this.total > 10) {
+                    this.total = 10;
+                    this.progress = '100%';
+                    alert('to many quotes');
+                }
+            }
+        },
 
         methods: {
-            onMouseOver() {
-                this.activeQuote = true;
-            },
-            onMouseLeave() {
-                this.activeQuote = false;
+            addedQuoteProgress(quote) {
+                this.quotes.push(quote);
             }
         }
 

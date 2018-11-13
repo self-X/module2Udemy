@@ -19,7 +19,10 @@
         box-shadow: 1px 1px 1px 1px #ccc;
         font-family: 'Arizonia', cursive;
         font-size: 26px;  
+        text-align: center;
+        word-wrap:  break-word;
     }
+
     #first-quote {
         margin: 100px 20px;
         height: 100%;

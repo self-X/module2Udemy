@@ -4,10 +4,10 @@
         <div class="progress">
             <div class="progress-bar" 
                 role="progressbar" 
-                style="width: 80%;" 
+                :style="{width: progress}" 
                 aria-valuenow="25" 
                 aria-valuemin="0" 
-                aria-valuemax="100">8/10
+                aria-valuemax="100">{{ total }}/10
             </div>
         </div>
     </div>
@@ -15,7 +15,14 @@
 
 <script>
     export default {
-        
+        props: {
+            progress: {
+                type: String
+            },
+            total: {
+                type: Number
+            }
+        },
     }
 </script>
 
