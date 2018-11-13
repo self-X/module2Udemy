@@ -14,7 +14,9 @@
                 <div class="container other-quotes"   
                     v-for = "(quote, index) in quotes" 
                     :key="`quote-${index}`"
-                    @click="deleteQuote(index)">
+                    @click="deleteQuote(index)"
+                    @mouseover="mouseoverHandler(index)"
+                    :class="{'alert-danger': (index === selectedQuote)}">
                     {{ quote }}          
                 </div>  
             </div>
@@ -33,6 +35,7 @@
             return {
                 quoteStart: 'Just a quote to start with something !',
                 quotes: [],
+                selectedQuote: 8979787897
             }
         },
 
@@ -66,9 +69,11 @@
 
             deleteQuote(index){
                 this.quotes = this.quotes.filter((el, key) => key != index );
+            },
+            mouseoverHandler(index) {
+                this.selectedQuote = index;
             }
         }
-
     }
 </script>
 
