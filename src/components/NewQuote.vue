@@ -25,10 +25,11 @@
 
         methods: {
             addQuote() {
+                //nextTick()
                 const sendQuote = new Promise((resolve, reject) => {
                     this.$emit('onNewQuote', this.newQuote)
                 });
-                sendQuote.then(this.newQuote ='');
+                sendQuote.then(this.newQuote = '');
             }
         }
     }

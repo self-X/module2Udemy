@@ -12,8 +12,9 @@
             </div>
             <div> 
                 <div class="container other-quotes"   
-                    v-for = "quote in quotes" 
-                    :key = "slot">
+                    v-for = "(quote, index) in quotes" 
+                    :key="`quote-${index}`"
+                    @click="deleteQuote(index)">
                     {{ quote }}          
                 </div>  
             </div>
@@ -37,12 +38,11 @@
 
         computed: {
             progress(){                        
-                return `${this.quotes.length * 10}%`; 
+                return `${((this.quotes && (this.quotes.length <= 10) && this.quotes.length) || 0 ) * 10}%`; 
             },
 
             total(){
-                return (this.quotes && this.quotes.length <= 10 && this.quotes.length) ||  
-                (this.quotes.length >= 1 && this.quotes.length) || 0;
+                return (this.quotes && (this.quotes.length <= 10) && this.quotes.length) || 0;
             }
         },
 
@@ -53,19 +53,19 @@
             appInfo: Info,
         },
         
-        watch: {
-            total() {
-                if (this.total > 10) {
-                    this.total = 10;
-                    this.progress = '100%';
-                    alert('to many quotes');
-                }
-            }
-        },
-
         methods: {
             addedQuoteProgress(quote) {
-                this.quotes.push(quote);
+                if (this.total < 10){ 
+                    if(quote){
+                        this.quotes.push(quote);
+                    }
+                } else {
+                    alert('We are full of quotes');
+                }     
+            },
+
+            deleteQuote(index){
+                this.quotes = this.quotes.filter((el, key) => key != index );
             }
         }
 
